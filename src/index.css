@@ -1,68 +1,125 @@
+/* ==== Theme tokens (light only) ==== */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg: #F3F5F9;
+  --fg: #0F172A;
+  --card: #FCFDFE;
+  --border: #DFE5EE;
+  --primary: #4959B8;
+  --primary-contrast: #ffffff;
+  --muted: #64748B;
+  --danger: #dc2626;
+  --radius: 12px;
+  --shadow: 0 2px 8px rgba(15, 23, 42, .06);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* ==== Resets / base ==== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* ==== Utilities ==== */
+.hidden { display: none !important; }
+.mt-8 { margin-top: 2rem; }
+
+/* ==== Layout wrappers ==== */
+.content { padding: 1rem 1rem 3rem; max-width: 980px; margin: 0 auto; }
+.content-centered { display: block; }
+.intro .title { font-size: 1.7rem; margin: .25rem 0 .25rem; }
+.muted { color: var(--muted); }
+
+/* ==== Cards ==== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+}
+.card-narrow { padding: 1.2rem; }
+
+/* ==== Grid ==== */
+.grid { display: grid; gap: 1rem; }
+.grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) {
+  .grid.two, .grid.three { grid-template-columns: 1fr; }
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* ==== Form fields ==== */
+.field { display: flex; flex-direction: column; }
+label { font-weight: 600; margin-bottom: .35rem; }
+.req { color: var(--danger); margin-left: .25rem; }
+
+input, select, textarea {
+  padding: .7rem .8rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 12px;
+  color: inherit;
+  outline: none;
+}
+textarea { resize: vertical; }
+input:focus, select:focus, textarea:focus {
+  border-color: color-mix(in oklab, var(--primary), black 10%);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary), transparent 80%);
+}
+
+/* ==== Buttons ==== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  justify-content: center;
+  padding: .75rem 1rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 12px;
   cursor: pointer;
-  transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+.btn.primary { background: var(--primary); color: var(--primary-contrast); border-color: transparent; }
+.btn.outline { background: transparent; }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* ==== Blocks / feedback ==== */
+.block {
+  border: 1px dashed var(--border);
+  padding: 1rem;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--card), transparent 10%);
+  margin-top: .5rem;
+}
+.error { color: var(--danger); font-size: 12px; margin-top: .25rem; min-height: 1.1em; }
+
+/* ==== Results / tickets ==== */
+.results { margin-top: 1rem; display: grid; gap: 1rem; }
+.ticket {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+.ticket textarea {
+  width: 100%;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--card), transparent 10%);
+}
+.copy-row { display: flex; justify-content: flex-end; margin-top: .5rem; }
+
+/* ==== Toast ==== */
+.toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: .75rem 1rem;
+  border-radius: 12px;
+  min-width: 220px;
 }
