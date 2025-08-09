@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function TicketNo() {
+export default function TicketNo({ value, onChange }) {
   return (
     <div className="field">
       <label htmlFor="ticket-no">Ticket No.</label>
@@ -9,6 +9,8 @@ export default function TicketNo() {
         name="ticket-no"
         type="number"
         placeholder="e.g. 12345"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
       <div className="error" data-error-for="ticket-no"></div>
     </div>

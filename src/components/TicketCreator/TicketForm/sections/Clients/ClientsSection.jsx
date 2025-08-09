@@ -1,5 +1,5 @@
 import React from "react";
-import ClientCard from "./ClientCard.jsx";
+import ClientCard from "./inputs/ClientCard.jsx";
 
 export default function ClientsSection() {
   return (

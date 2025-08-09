@@ -1,6 +1,7 @@
 import React from "react";
-import CallerType from "./CallerType.jsx";
-import CallbackNo from "./CallbackNo.jsx";
+import CallerType from "./inputs/CallerType.jsx";
+import CallbackNo from "./inputs/CallbackNo.jsx";
+
 
 export default function CallerSection() {
   return (

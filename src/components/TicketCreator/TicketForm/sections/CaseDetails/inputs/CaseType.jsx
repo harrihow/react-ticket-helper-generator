@@ -1,13 +1,18 @@
 import React from "react";
 
-export default function CaseType() {
+export default function CaseType({ value, onChange }) {
   return (
     <div className="field">
       <label htmlFor="case-type">
         Case Type<span className="req">*</span>
       </label>
-      <select id="case-type" name="case-type">
-        <option value="" disabled>Select a case type</option>
+      <select
+        id="case-type"
+        name="case-type"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        <option value="">Select a case type</option>
         <option>Call Out</option>
         <option>Schedule Inquiries / Adjustments</option>
         <option>Client Sick / In Pain</option>
