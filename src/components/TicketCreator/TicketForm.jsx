@@ -1,4 +1,3 @@
-import React from "react";
 import React, { useState } from "react";
 import CaseDetailsSection from "./sections/CaseDetailsSection";
 import CallerSection from "./sections/CallerSection";
