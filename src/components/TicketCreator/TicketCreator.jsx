@@ -6,7 +6,7 @@ export default function () {
         <main>
             <section className="content content-centered">
                 <h2 className="title">Ticket Creator</h2>
-                <p className="muted">Fill in the details below to generate ticket text. No backend required.</p>
+                <p className="muted">Fill in the details below to generate ticket text.</p>
             </section>
             <TicketForm />
         </main>
