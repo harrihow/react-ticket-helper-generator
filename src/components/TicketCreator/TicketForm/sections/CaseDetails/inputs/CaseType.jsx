@@ -1,17 +1,10 @@
 import React from "react";
 
-export default function CaseType({ value, onChange }) {
+export default function CaseType({ value, onChange, errFor }) {
   return (
     <div className="field">
-      <label htmlFor="case-type">
-        Case Type<span className="req">*</span>
-      </label>
-      <select
-        id="case-type"
-        name="case-type"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      >
+      <label htmlFor="case-type">Case Type<span className="req">*</span></label>
+      <select id="case-type" value={value} onChange={(e)=> onChange(e.target.value)}>
         <option value="">Select a case type</option>
         <option>Call Out</option>
         <option>Schedule Inquiries / Adjustments</option>
@@ -28,7 +21,7 @@ export default function CaseType({ value, onChange }) {
         <option>Timesheet Questions</option>
         <option>Caregiver Unable to Find Address</option>
       </select>
-      <div className="error" data-error-for="case-type"></div>
+      <div className="error">{errFor("case-type")}</div>
     </div>
   );
 }
