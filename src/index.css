@@ -138,6 +138,43 @@ input:focus, select:focus, textarea:focus {
   color: var(--primary);
 }
 
+/* ==== Authentication ==== */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+  background: var(--bg);
+}
+
+.auth-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--fg);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.auth-card .field {
+  margin-bottom: 1rem;
+}
+
+.auth-card .btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
 /* ==== Toast ==== */
 .toast {
   position: fixed;
@@ -151,3 +188,6 @@ input:focus, select:focus, textarea:focus {
   min-width: 220px;
   font-size: 0.875rem;
 }
+
+/* add success style for positive messages */
+.success { color: #16a34a; font-size: 0.875rem; margin-top: .25rem; min-height: 1.1em; }
