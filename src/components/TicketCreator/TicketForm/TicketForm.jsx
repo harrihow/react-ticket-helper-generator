@@ -7,8 +7,9 @@ import AmsStateAgentSection from "./sections/AmsStateAgent/AmsStateAgentSection.
 import ReasonSection from "./sections/Reason/ReasonSection.jsx";
 import FormActions from "./sections/Actions/FormActions.jsx";
 
-// Simple client factory so we always add the same shape
+const createClientId = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
 const emptyClient = () => ({
+  id: createClientId(),
   name: "",
   start: "",
   end: "",
@@ -19,7 +20,6 @@ const emptyClient = () => ({
 });
 
 export default function TicketForm() {
-  // Keep state centralized here to stay beginner-friendly
   const [ticketNo, setTicketNo] = useState("");
   const [caseType, setCaseType] = useState("");
   const [callOutReason, setCallOutReason] = useState("");
@@ -35,23 +35,21 @@ export default function TicketForm() {
   const [agentInitial, setAgentInitial] = useState("");
   const [reason, setReason] = useState("");
 
-  const [errors, setErrors] = useState({}); // keyed by field id
-  const [tickets, setTickets] = useState([]); // generated output
-  const [toast, setToast] = useState(""); // lightweight feedback
+  const [errors, setErrors] = useState({});
+  const [tickets, setTickets] = useState([]);
+  const [toast, setToast] = useState("");
 
   const isCallOut = caseType === "Call Out";
   const dueToIllness = isCallOut && callOutReason === "Due to Illness";
   const reasonRequired = (isCallOut && callOutReason === "Not Due to Illness") || (!isCallOut);
 
-  // --- Helpers ---
   function showToast(msg){
     setToast(msg);
     setTimeout(()=> setToast(""), 2200);
   }
 
   function formatPhone(input){
-    // Why: keep the friendly formatting from your vanilla JS
-    const digits = input.replace(/\D/g, "");
+    const digits = input.replace(/\D/g, "").slice(0, 10);
     if(digits.length <= 3) return digits;
     if(digits.length <= 6) return `(${digits.slice(0,3)}) ${digits.slice(3)}`;
     return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6,10)}`;
@@ -62,7 +60,6 @@ export default function TicketForm() {
   function updateClient(index, patch){ setClients(prev => prev.map((c,i)=> i===index ? { ...c, ...patch } : c)); }
 
   function clearAll(){
-    // Why: mirror your Clear All button behavior
     setTicketNo(""); setCaseType(""); setCallOutReason(""); setSymptoms("");
     setCallerType(""); setCallerTypeOther(""); setCallbackNo("");
     setCaregiver(""); setDateOfShift(""); setClients([emptyClient()]);
@@ -71,7 +68,6 @@ export default function TicketForm() {
     showToast("All fields have been reset.");
   }
 
-  // --- Validation ported from static JS ---
   function validate(){
     const err = {};
     if(!callerType) err["caller-type"] = "Caller Type is required.";
@@ -113,7 +109,6 @@ export default function TicketForm() {
     return Object.keys(err).length === 0;
   }
 
-  // --- Ticket generation (ported) ---
   function detailsList(items){
     return items.filter(([_,v])=> v && v.toString().trim().length>0)
       .map(([k,v])=> `- ${k}: ${v}`).join("\n");
@@ -121,7 +116,7 @@ export default function TicketForm() {
   function normalizeReplacement(value){
     if(!value) return "not specified";
     const v = value.toLowerCase();
-    if(v.includes("is not")) return "is not needed"; // keep exact phrasing variants
+    if(v.includes("is not")) return "is not needed";
     if(v.includes("is needed")) return "is needed";
     if(v.includes("not")) return "not needed";
     if(v.includes("needed")) return "needed";
@@ -214,7 +209,6 @@ export default function TicketForm() {
     showToast("Ticket(s) generated successfully.");
   }
 
-  // Pass errors with a helper so children can show messages by key
   const errFor = (key) => errors[key] || "";
 
   return (
@@ -281,20 +275,25 @@ export default function TicketForm() {
         <FormActions onClear={clearAll} />
       </form>
 
-      {/* Results */}
       <section id="results" className={`results ${tickets.length? "" : "hidden"}`}>
         {tickets.map((tk, i)=> (
           <div key={i} className="ticket">
             <label>Generated Ticket {i+1}</label>
             <textarea rows={12} readOnly value={tk} />
             <div className="copy-row">
-              <button className="btn" type="button" onClick={()=> { navigator.clipboard.writeText(tk); showToast("Ticket copied to clipboard."); }}>Copy</button>
+              <button className="btn" type="button" onClick={async ()=> {
+                try {
+                  await navigator.clipboard.writeText(tk);
+                  showToast("Ticket copied to clipboard.");
+                } catch {
+                  showToast("Copy failed. Please copy manually.");
+                }
+              }}>Copy</button>
             </div>
           </div>
         ))}
       </section>
 
-      {/* Toast */}
       <div id="toast" className={`toast ${toast? "" : "hidden"}`} role="status" aria-live="polite">{toast}</div>
     </section>
   );

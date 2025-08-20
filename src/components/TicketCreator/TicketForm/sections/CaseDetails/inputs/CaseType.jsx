@@ -7,19 +7,13 @@ export default function CaseType({ value, onChange, errFor }) {
       <select id="case-type" value={value} onChange={(e)=> onChange(e.target.value)}>
         <option value="">Select a case type</option>
         <option>Call Out</option>
-        <option>Schedule Inquiries / Adjustments</option>
-        <option>Client Sick / In Pain</option>
-        <option>Client Accidents / Fall / Injury</option>
-        <option>Client Hospitalization</option>
-        <option>Client Hospital Discharge</option>
-        <option>Client Deceased</option>
-        <option>Covid Positive / Exposure</option>
-        <option>Complaint</option>
-        <option>Incident Report</option>
-        <option>Event Reporting</option>
-        <option>Ghost Calls</option>
-        <option>Timesheet Questions</option>
-        <option>Caregiver Unable to Find Address</option>
+        <option>AMS Mobile App Issues</option>
+        <option>Schedule Inquiries/Adjustment</option>
+        <option>Asking to Speak to a Specific Person/Department</option>
+        <option>Returning a Missed Call/SMS/Email</option>
+        <option>No Call No Show</option>
+        <option>Late In/Early Out</option>
+        <option>At Client Home Not Responding</option>
       </select>
       <div className="error">{errFor("case-type")}</div>
     </div>

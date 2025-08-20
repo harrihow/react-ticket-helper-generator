@@ -6,7 +6,7 @@ export default function ClientsSection({ isCallOut, clients, addClient, removeCl
     <>
       <div id="clients">
         {clients.map((c, idx)=> (
-          <ClientCard key={idx} index={idx} isCallOut={isCallOut} client={c} removeClient={removeClient} updateClient={updateClient} errFor={errFor} canRemove={clients.length>1} />
+          <ClientCard key={c.id || idx} index={idx} isCallOut={isCallOut} client={c} removeClient={removeClient} updateClient={updateClient} errFor={errFor} canRemove={clients.length>1} />
         ))}
       </div>
       <button type="button" className="btn outline mt-8" onClick={addClient}>
